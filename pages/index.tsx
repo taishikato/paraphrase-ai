@@ -131,12 +131,21 @@ const Home: NextPage = () => {
           )}
 
           {result && (
-            <Box>
+            <Box mb={50}>
               <Paper shadow="md" radius="md" p="md">
                 <Text>{result}</Text>
               </Paper>
             </Box>
           )}
+        </Box>
+        <Box ta="center" mt={40}>
+          <Button
+            component="a"
+            href="https://twitter.com/intent/tweet?original_referer=https%3A%2F%2Fdeveloper.twitter.com%2F&ref_src=twsrc%5Etfw%7Ctwcamp%5Ebuttonembed%7Ctwterm%5Eshare%7Ctwgr%5E&related=twitterapi%2Ctwitter&text=Paraphrase AI - The paraphrasing tool for web content that wows&url=https://paraphraseai.app/&via=taishik_"
+            target="_blank"
+          >
+            Share Paraphrase AI on Twitter
+          </Button>
         </Box>
       </Box>
       <Footer />
