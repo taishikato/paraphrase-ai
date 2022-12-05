@@ -21,10 +21,13 @@ const ExampleItem = ({
       }}
       sx={(theme) => ({
         borderRadius: theme.radius.lg,
-        border: `1px solid ${theme.colors.gray[7]}`,
+        border: `2px solid ${theme.colors.gray[7]}`,
         padding: theme.spacing.sm,
         marginBottom: theme.spacing.sm,
         cursor: "pointer",
+        "&:hover": {
+          border: `2px solid ${theme.colors.gray[5]}`,
+        },
       })}
       className={manrope.className}
     >
