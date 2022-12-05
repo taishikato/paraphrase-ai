@@ -1,34 +1,65 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Paraphrase AI
 
-## Getting Started
+A simple app that specialized in paraphrasing short texts such as headlines on your landing page 😎
 
-First, run the development server:
+Paraphrase AI is using OpenAI GPT-3 🤖
 
-```bash
-npm run dev
-# or
-yarn dev
+## You need an API
+
+You have to build an API to call Open AI GPT-3 API and set it on `.env` file.
+
+I built an API on [Kuiq](https://kuiq.io/).
+
+Here is the code. You need your own OpenAI API Key.
+
+```typescript
+import "https://deno.land/x/xhr@0.1.0/mod.ts";
+import { serve } from "https://deno.land/std@0.144.0/http/server.ts"
+import { Configuration, OpenAIApi } from "https://esm.sh/openai@3.1.0"
+
+serve(async (req) => {
+  const u = new URL(req.url);
+  const userInput = u.searchParams.get('text');
+
+  if (!userInput) {
+    return new Response('no query', {
+      headers: { "Content-Type": "application/json" },
+    });
+  }
+
+  const configuration = new Configuration({
+    apiKey: "YOUR-OPENAI-API-KEY"
+  });
+  const openai = new OpenAIApi(configuration);
+
+  const response = await openai.createCompletion({
+    model: "text-davinci-003",
+    prompt: `Rephrase the text in other words in the style of Paul Graham for a startup company.
+
+Text: Supercharge your writing with the most advanced AI writing assistant.
+
+Rephrase: Give your writing a turbo boost with the most innovative AI writing companion.
+
+Text: Build in a weekend. Scale to millions.
+
+Rephrase: Construct in a matter of days. Expand to a huge customer base.
+
+Text: The fastest way to combine your favorite tools and APIs to build the fastest sites, stores, and apps for the web.
+
+Rephrase: The quickest way to join together your most-used tools and APIs to construct the swiftest websites, stores, and applications for online use.
+
+Text: ${userInput}
+
+Rephrase:`,
+    temperature: 0.7,
+    max_tokens: 250,
+    top_p: 1,
+    frequency_penalty: 0.5,
+    presence_penalty: 0,
+  });
+
+  return new Response(JSON.stringify(response.data.choices), {
+    headers: { "Content-Type": "application/json" },
+  });
+});
 ```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
