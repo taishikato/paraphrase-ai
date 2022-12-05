@@ -7,6 +7,7 @@ import { Manrope } from "@next/font/google";
 import ExampleItem from "../components/ExampleItem";
 import Footer from "../components/Footer";
 import { showNotification } from "@mantine/notifications";
+import { event } from "nextjs-google-analytics";
 
 const manrope = Manrope({ subsets: ["latin"] });
 
@@ -19,6 +20,8 @@ const Home: NextPage = () => {
   const [result, setResult] = useState<string | null>(null);
 
   const getParaphrasedText = async (text: string) => {
+    event("paraphrase-button", { value: 1 });
+
     setResult(null);
     setLoading(true);
 
