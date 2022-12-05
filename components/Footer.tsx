@@ -47,7 +47,17 @@ const Footer = () => {
     <footer className={classes.footer}>
       <Container className={classes.afterFooter}>
         <Text color="dimmed" size="sm">
-          <>© {year} Paraphrase AI. All rights reserved.</>
+          <>
+            © {year} Paraphrase AI. All rights reserved. Build by{" "}
+            <Text
+              component="a"
+              href="https://twitter.com/taishik_"
+              target="_blank"
+              sx={(theme) => ({ color: theme.colors.blue[5] })}
+            >
+              @taishik_
+            </Text>
+          </>
         </Text>
 
         <Group spacing={0} className={classes.social} position="right" noWrap>
